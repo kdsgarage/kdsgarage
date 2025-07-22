@@ -3,3 +3,4 @@ body { font-family: sans-serif; background: #111; color: #fff; text-align: cente
 header { background: limegreen; padding: 1rem; }
 input, button, textarea { margin: 0.5rem; padding: 0.5rem; }
 #gallery img { width: 100px; margin: 0.5rem; }
+button { background-color: limegreen; color: black; border: none; cursor: pointer; }

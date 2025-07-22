@@ -3,19 +3,22 @@ function login() {
   const email = document.getElementById('email').value;
   const pass = document.getElementById('password').value;
   firebase.auth().signInWithEmailAndPassword(email, pass)
-    .then(() => showGarage()).catch(alert);
+    .then(() => showGarage())
+    .catch((error) => alert("Login error: " + error.message));
 }
 
 function signup() {
   const email = document.getElementById('email').value;
   const pass = document.getElementById('password').value;
   firebase.auth().createUserWithEmailAndPassword(email, pass)
-    .then(() => showGarage()).catch(alert);
+    .then(() => showGarage())
+    .catch((error) => alert("Signup error: " + error.message));
 }
 
 function logout() {
   firebase.auth().signOut().then(() => {
     document.getElementById('garage-section').style.display = 'none';
+    alert("Logged out");
   });
 }
 
@@ -26,24 +29,31 @@ function showGarage() {
 }
 
 firebase.auth().onAuthStateChanged(user => {
-  if (user) showGarage();
+  if (user) {
+    showGarage();
+  } else {
+    document.getElementById('garage-section').style.display = 'none';
+  }
 });
 
-document.getElementById("imageUpload").addEventListener("change", async (e) => {
-  const file = e.target.files[0];
-  const ref = firebase.storage().ref().child("images/" + file.name);
-  await ref.put(file);
-  const url = await ref.getDownloadURL();
-  const img = document.createElement("img");
-  img.src = url;
-  document.getElementById("gallery").appendChild(img);
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("imageUpload").addEventListener("change", async (e) => {
+    const file = e.target.files[0];
+    const ref = firebase.storage().ref().child("images/" + file.name);
+    await ref.put(file);
+    const url = await ref.getDownloadURL();
+    const img = document.createElement("img");
+    img.src = url;
+    document.getElementById("gallery").appendChild(img);
+  });
 });
 
 function saveLog() {
   const text = document.getElementById("logText").value;
   firebase.firestore().collection("logs").add({
     uid: firebase.auth().currentUser.uid,
-    text, created: Date.now()
+    text,
+    created: Date.now()
   });
   document.getElementById("logText").value = "";
   loadLogs();
