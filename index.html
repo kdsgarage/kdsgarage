@@ -1,11 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KD’S Garage</title>
+  <title>KD’S Garage Debug</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
   <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
@@ -14,32 +14,13 @@
   <script defer src="script.js"></script>
 </head>
 <body>
-  <header>
-    <img src="logo.png" alt="KD's Garage Logo" style="max-width: 250px;" />
-    <h1>KD’S Garage</h1>
-  </header>
-
-  <main>
-    <section id="auth-section">
-      <h2>Login / Signup</h2>
-      <input type="email" id="email" placeholder="Email" />
-      <input type="password" id="password" placeholder="Password" />
-      <br />
-      <button onclick="signup()">Sign Up</button>
-      <button onclick="login()">Login</button>
-      <button onclick="logout()">Logout</button>
-    </section>
-
-    <section id="garage-section" style="display: none;">
-      <h2>Your Garage</h2>
-      <input type="file" id="imageUpload" accept="image/*" />
-      <div id="gallery"></div>
-
-      <h3>Service Log</h3>
-      <textarea id="logText" placeholder="Add service notes..."></textarea>
-      <button onclick="saveLog()">Save Log</button>
-      <ul id="logList"></ul>
-    </section>
-  </main>
+  <h1>KD’S Garage Debug</h1>
+  <input type="email" id="email" placeholder="Email" />
+  <input type="password" id="password" placeholder="Password" />
+  <br />
+  <button onclick="signup()">Sign Up</button>
+  <button onclick="login()">Login</button>
+  <button onclick="logout()">Logout</button>
+  <div id="gallery"></div>
 </body>
 </html>

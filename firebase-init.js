@@ -1,4 +1,5 @@
 
+alert("Initializing Firebase");
 const firebaseConfig = {
   apiKey: "AIzaSyCZRKv8dvCHRHU6jZx7jJmgmZiip5VVo0A",
   authDomain: "kds-garage.firebaseapp.com",
@@ -9,3 +10,4 @@ const firebaseConfig = {
   measurementId: "G-WK0Z32CBXM"
 };
 firebase.initializeApp(firebaseConfig);
+alert("Firebase Initialized");
