@@ -40,7 +40,7 @@ function logout() {
 }
 
 function showDashboard(user) {
-  document.getElementById("dashboard").innerHTML = `
+  $("dashboard").innerHTML = `
     <p>Logged in as <strong>${user.email}</strong></p>
     <input type="file" accept="image/*" onchange="uploadImage(event)">
     <div id="garage"><h2>Your Garage</h2><div id="gallery"></div></div>
@@ -53,7 +53,7 @@ function uploadImage(event) {
   const user = auth.currentUser;
   if (!file || !user) return;
 
-  const storageRef = storage.ref(`users/${user.uid}/${file.name}`);
+  const storageRef = storage.ref(\`users/\${user.uid}/\${file.name}\`);
   storageRef.put(file).then(() => {
     alert("✅ Upload complete!");
     loadImages(user);
@@ -63,7 +63,7 @@ function uploadImage(event) {
 function loadImages(user) {
   const gallery = $("gallery");
   gallery.innerHTML = "";
-  const ref = storage.ref(`users/${user.uid}`);
+  const ref = storage.ref(\`users/\${user.uid}\`);
   ref.listAll().then(result => {
     result.items.forEach(imageRef => {
       imageRef.getDownloadURL().then(url => {
