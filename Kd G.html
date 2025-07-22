@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+  <title>KD’S Garage</title>
+</head>
+<body>
+  
+<header>
+  <img src="logo.png" alt="KD's Garage Logo" style="max-width: 300px; margin-bottom: 1rem;" />
+
+    <h1>KD’S Garage</h1>
+    <p>🔥 Built for speed. Styled like Hot Wheels. 🔥</p>
+  </header>
+  <main>
+    <section class="upload-section">
+      <h2>Upload Your Ride</h2>
+      <input type="file" id="imageUpload" accept="image/*" />
+      <div id="preview" class="gallery"></div>
+    </section>
+
+    <section class="service-log">
+      <h2>Service Log</h2>
+      <form id="serviceForm">
+        <input type="text" id="serviceName" placeholder="Service or Part Name" required />
+        <input type="date" id="serviceDate" required />
+        <input type="number" id="serviceCost" placeholder="Cost ($)" required />
+        <button type="submit">Add Entry</button>
+      </form>
+      <table id="logTable">
+        <thead>
+          <tr>
+            <th>Service</th><th>Date</th><th>Cost</th><th>Remove</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+  <script src="script.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js').then(() => {
+        console.log('Service Worker Registered');
+      });
+    }
+  </script>
+</body>
+</html>
