@@ -1,45 +1,56 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KD’S Garage</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
-  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
-  <script defer src="firebase-init.js"></script>
-  <script defer src="script.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+  <style>
+    body {
+      background-color: black;
+      color: limegreen;
+      font-family: 'Trebuchet MS', sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 5px limegreen;
+    }
+    input, button {
+      margin: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 1em;
+    }
+    button {
+      background-color: gray;
+      color: white;
+    }
+    #garage img {
+      width: 100px;
+      margin: 10px;
+      border: 2px solid limegreen;
+      border-radius: 5px;
+    }
+    .highlight {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <img src="logo.png" alt="KD's Garage Logo" style="max-width: 250px;" />
-    <h1>KD’S Garage</h1>
-  </header>
+  <h1>Welcome to KD’S Garage</h1>
+  <input id="email" type="email" placeholder="Enter Email"><br>
+  <input id="password" type="password" placeholder="Enter Password"><br>
+  <button onclick="signup()">Sign Up</button>
+  <button onclick="login()">Login</button>
+  <button onclick="logout()">Logout</button>
 
-  <main>
-    <section id="auth-section">
-      <h2>Login / Signup</h2>
-      <input type="email" id="email" placeholder="Email" />
-      <input type="password" id="password" placeholder="Password" />
-      <br />
-      <button onclick="signup()">Sign Up</button>
-      <button onclick="login()">Login</button>
-      <button onclick="logout()">Logout</button>
-    </section>
-
-    <section id="garage-section" style="display: none;">
-      <h2>Your Garage</h2>
-      <input type="file" id="imageUpload" accept="image/*" />
-      <div id="gallery"></div>
-
-      <h3>Service Log</h3>
-      <textarea id="logText" placeholder="Add service notes..."></textarea>
-      <button onclick="saveLog()">Save Log</button>
-      <ul id="logList"></ul>
-    </section>
-  </main>
+  <div id="dashboard" class="highlight"></div>
+  <script src="script.js"></script>
 </body>
 </html>
