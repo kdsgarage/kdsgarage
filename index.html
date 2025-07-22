@@ -1,53 +1,44 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KD’S Garage</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
-  <title>KD’S Garage</title>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+  <script defer src="firebase-init.js"></script>
+  <script defer src="script.js"></script>
 </head>
 <body>
-  
-<header>
-  <img src="logo.png" alt="KD's Garage Logo" style="max-width: 300px; margin-bottom: 1rem;" />
-
+  <header>
+    <img src="logo.png" alt="KD's Garage Logo" style="max-width: 280px;" />
     <h1>KD’S Garage</h1>
-    <p>🔥 Built for speed. Styled like Hot Wheels. 🔥</p>
   </header>
+
   <main>
-    <section class="upload-section">
-      <h2>Upload Your Ride</h2>
-      <input type="file" id="imageUpload" accept="image/*" />
-      <div id="preview" class="gallery"></div>
+    <section id="auth-section">
+      <h2>Login / Signup</h2>
+      <input type="email" id="email" placeholder="Email" />
+      <input type="password" id="password" placeholder="Password" />
+      <button onclick="login()">Login</button>
+      <button onclick="signup()">Sign Up</button>
+      <button onclick="logout()">Logout</button>
     </section>
 
-    <section class="service-log">
-      <h2>Service Log</h2>
-      <form id="serviceForm">
-        <input type="text" id="serviceName" placeholder="Service or Part Name" required />
-        <input type="date" id="serviceDate" required />
-        <input type="number" id="serviceCost" placeholder="Cost ($)" required />
-        <button type="submit">Add Entry</button>
-      </form>
-      <table id="logTable">
-        <thead>
-          <tr>
-            <th>Service</th><th>Date</th><th>Cost</th><th>Remove</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+    <section id="garage-section" style="display:none;">
+      <h2>Your Garage</h2>
+      <input type="file" id="imageUpload" accept="image/*" />
+      <div id="gallery"></div>
+
+      <h3>Service Log</h3>
+      <textarea id="logText" placeholder="Add service notes..."></textarea>
+      <button onclick="saveLog()">Save Log</button>
+      <ul id="logList"></ul>
     </section>
   </main>
-  <script src="script.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js').then(() => {
-        console.log('Service Worker Registered');
-      });
-    }
-  </script>
 </body>
 </html>

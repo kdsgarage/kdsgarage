@@ -1,85 +1,76 @@
 
-const imageInput = document.getElementById("imageUpload");
-const preview = document.getElementById("preview");
-const galleryKey = "kdsgarage_gallery";
-
-imageInput.addEventListener("change", () => {
-  const file = imageInput.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const imgData = reader.result;
-      addToGallery(imgData);
-      saveImage(imgData);
-    };
-    reader.readAsDataURL(file);
-  }
-});
-
-function saveImage(data) {
-  const gallery = JSON.parse(localStorage.getItem(galleryKey) || "[]");
-  gallery.push(data);
-  localStorage.setItem(galleryKey, JSON.stringify(gallery));
+function login() {
+  const email = document.getElementById('email').value;
+  const pass = document.getElementById('password').value;
+  firebase.auth().signInWithEmailAndPassword(email, pass)
+    .then(() => showGarage()).catch(alert);
 }
 
-function addToGallery(src) {
+function signup() {
+  const email = document.getElementById('email').value;
+  const pass = document.getElementById('password').value;
+  firebase.auth().createUserWithEmailAndPassword(email, pass)
+    .then(() => showGarage()).catch(alert);
+}
+
+function logout() {
+  firebase.auth().signOut().then(() => {
+    document.getElementById('garage-section').style.display = 'none';
+  });
+}
+
+function showGarage() {
+  document.getElementById('garage-section').style.display = 'block';
+  loadGallery();
+  loadLogs();
+}
+
+firebase.auth().onAuthStateChanged(user => {
+  if (user) showGarage();
+});
+
+document.getElementById("imageUpload").addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  const ref = firebase.storage().ref().child("images/" + file.name);
+  await ref.put(file);
+  const url = await ref.getDownloadURL();
   const img = document.createElement("img");
-  img.src = src;
-  preview.appendChild(img);
-}
-
-function loadGallery() {
-  const gallery = JSON.parse(localStorage.getItem(galleryKey) || "[]");
-  gallery.forEach(addToGallery);
-}
-
-loadGallery();
-
-// Service log functionality
-const form = document.getElementById("serviceForm");
-const logTable = document.querySelector("#logTable tbody");
-const logKey = "kdsgarage_log";
-
-form.addEventListener("submit", e => {
-  e.preventDefault();
-  const name = document.getElementById("serviceName").value;
-  const date = document.getElementById("serviceDate").value;
-  const cost = document.getElementById("serviceCost").value;
-
-  const entry = { name, date, cost };
-  addLogEntry(entry);
-  saveLogEntry(entry);
-  form.reset();
+  img.src = url;
+  document.getElementById("gallery").appendChild(img);
 });
 
-function addLogEntry(entry, index = null) {
-  const row = logTable.insertRow();
-  row.innerHTML = `
-    <td>${entry.name}</td>
-    <td>${entry.date}</td>
-    <td>$${entry.cost}</td>
-    <td><button onclick="removeEntry(${index})">❌</button></td>
-  `;
+function saveLog() {
+  const text = document.getElementById("logText").value;
+  firebase.firestore().collection("logs").add({
+    uid: firebase.auth().currentUser.uid,
+    text, created: Date.now()
+  });
+  document.getElementById("logText").value = "";
+  loadLogs();
 }
 
-function saveLogEntry(entry) {
-  const log = JSON.parse(localStorage.getItem(logKey) || "[]");
-  log.push(entry);
-  localStorage.setItem(logKey, JSON.stringify(log));
-  renderLog();
+async function loadLogs() {
+  const list = document.getElementById("logList");
+  list.innerHTML = "";
+  const snap = await firebase.firestore().collection("logs")
+    .where("uid", "==", firebase.auth().currentUser.uid)
+    .orderBy("created", "desc").get();
+  snap.forEach(doc => {
+    const li = document.createElement("li");
+    li.textContent = doc.data().text;
+    list.appendChild(li);
+  });
 }
 
-function removeEntry(index) {
-  const log = JSON.parse(localStorage.getItem(logKey) || "[]");
-  log.splice(index, 1);
-  localStorage.setItem(logKey, JSON.stringify(log));
-  renderLog();
+async function loadGallery() {
+  const gallery = document.getElementById("gallery");
+  gallery.innerHTML = "";
+  const ref = firebase.storage().ref().child("images");
+  const list = await ref.listAll();
+  for (const item of list.items) {
+    const url = await item.getDownloadURL();
+    const img = document.createElement("img");
+    img.src = url;
+    gallery.appendChild(img);
+  }
 }
-
-function renderLog() {
-  logTable.innerHTML = "";
-  const log = JSON.parse(localStorage.getItem(logKey) || "[]");
-  log.forEach((entry, i) => addLogEntry(entry, i));
-}
-
-renderLog();
