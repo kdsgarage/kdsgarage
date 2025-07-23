@@ -1,3 +1,44 @@
 
-body { background: black; color: limegreen; font-family: sans-serif; text-align: center; padding: 1rem; }
-input, button { margin: 0.5rem; padding: 0.5rem; }
+body {
+  margin: 0;
+  font-family: 'Arial Black', sans-serif;
+  background: limegreen url('https://i.imgur.com/5P7qEmT.png') repeat-x top;
+  color: black;
+  text-align: center;
+}
+
+header {
+  padding: 2rem;
+  background-color: black;
+  color: limegreen;
+  border-bottom: 5px solid limegreen;
+}
+
+.upload-section, .service-log {
+  padding: 2rem;
+}
+
+.gallery img {
+  margin: 1rem;
+  width: 150px;
+  border: 5px solid black;
+}
+
+table {
+  margin: 1rem auto;
+  width: 90%;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th, td {
+  padding: 0.5rem;
+}
+
+form input, form button {
+  margin: 0.5rem;
+  padding: 0.5rem;
+}

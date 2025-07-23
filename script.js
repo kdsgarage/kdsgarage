@@ -1,25 +1,85 @@
 
-function signup() {
-  alert("Signup clicked");
-  const email = document.getElementById('email').value;
-  const pass = document.getElementById('password').value;
-  firebase.auth().createUserWithEmailAndPassword(email, pass)
-    .then(() => alert("Signed up successfully"))
-    .catch((err) => alert("Signup error: " + err.message));
+const imageInput = document.getElementById("imageUpload");
+const preview = document.getElementById("preview");
+const galleryKey = "kdsgarage_gallery";
+
+imageInput.addEventListener("change", () => {
+  const file = imageInput.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const imgData = reader.result;
+      addToGallery(imgData);
+      saveImage(imgData);
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+function saveImage(data) {
+  const gallery = JSON.parse(localStorage.getItem(galleryKey) || "[]");
+  gallery.push(data);
+  localStorage.setItem(galleryKey, JSON.stringify(gallery));
 }
 
-function login() {
-  alert("Login clicked");
-  const email = document.getElementById('email').value;
-  const pass = document.getElementById('password').value;
-  firebase.auth().signInWithEmailAndPassword(email, pass)
-    .then(() => alert("Logged in"))
-    .catch((err) => alert("Login error: " + err.message));
+function addToGallery(src) {
+  const img = document.createElement("img");
+  img.src = src;
+  preview.appendChild(img);
 }
 
-function logout() {
-  alert("Logout clicked");
-  firebase.auth().signOut()
-    .then(() => alert("Logged out"))
-    .catch((err) => alert("Logout error: " + err.message));
+function loadGallery() {
+  const gallery = JSON.parse(localStorage.getItem(galleryKey) || "[]");
+  gallery.forEach(addToGallery);
 }
+
+loadGallery();
+
+// Service log functionality
+const form = document.getElementById("serviceForm");
+const logTable = document.querySelector("#logTable tbody");
+const logKey = "kdsgarage_log";
+
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  const name = document.getElementById("serviceName").value;
+  const date = document.getElementById("serviceDate").value;
+  const cost = document.getElementById("serviceCost").value;
+
+  const entry = { name, date, cost };
+  addLogEntry(entry);
+  saveLogEntry(entry);
+  form.reset();
+});
+
+function addLogEntry(entry, index = null) {
+  const row = logTable.insertRow();
+  row.innerHTML = `
+    <td>${entry.name}</td>
+    <td>${entry.date}</td>
+    <td>$${entry.cost}</td>
+    <td><button onclick="removeEntry(${index})">❌</button></td>
+  `;
+}
+
+function saveLogEntry(entry) {
+  const log = JSON.parse(localStorage.getItem(logKey) || "[]");
+  log.push(entry);
+  localStorage.setItem(logKey, JSON.stringify(log));
+  renderLog();
+}
+
+function removeEntry(index) {
+  const log = JSON.parse(localStorage.getItem(logKey) || "[]");
+  log.splice(index, 1);
+  localStorage.setItem(logKey, JSON.stringify(log));
+  renderLog();
+}
+
+function renderLog() {
+  logTable.innerHTML = "";
+  const log = JSON.parse(localStorage.getItem(logKey) || "[]");
+  log.forEach((entry, i) => addLogEntry(entry, i));
+}
+
+renderLog();
