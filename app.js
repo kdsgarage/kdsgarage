@@ -1,7 +1,6 @@
 const uploadInput = document.getElementById('imageUpload');
 const gallery = document.getElementById('gallery');
 
-// Load saved garage on page load
 window.onload = () => {
   const savedImages = JSON.parse(localStorage.getItem('garageImages')) || [];
   if (savedImages.length > 0) {
