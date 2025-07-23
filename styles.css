@@ -1,0 +1,51 @@
+body {
+  margin: 0;
+  font-family: 'Arial Black', sans-serif;
+  background-color: #000;
+  color: lime;
+  text-align: center;
+}
+
+header {
+  background: black;
+  padding: 1rem;
+  border-bottom: 3px solid lime;
+}
+
+h1 {
+  font-size: 2rem;
+  color: lime;
+  text-shadow: 2px 2px black;
+}
+
+.upload-section {
+  margin: 2rem 0;
+}
+
+button {
+  background-color: lime;
+  color: black;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #aaff00;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.gallery img {
+  width: 200px;
+  border: 3px solid lime;
+  border-radius: 8px;
+}

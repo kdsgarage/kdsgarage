@@ -1,26 +1,27 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KD’S Garage Debug - Compat</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script defer src="firebase-init.js"></script>
-  <script defer src="script.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KD'S Garage</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1>KD’S Garage Debug</h1>
-  <input type="email" id="email" placeholder="Email" />
-  <input type="password" id="password" placeholder="Password" />
-  <br />
-  <button onclick="signup()">Sign Up</button>
-  <button onclick="login()">Login</button>
-  <button onclick="logout()">Logout</button>
-  <div id="gallery"></div>
+  <header>
+    <h1>KD'S Garage</h1>
+  </header>
+
+  <main>
+    <section class="upload-section">
+      <input type="file" id="imageUpload" accept="image/*" multiple />
+      <button onclick="clearGarage()">Clear Garage</button>
+    </section>
+
+    <section class="gallery" id="gallery">
+      <p>No cars in your garage yet.</p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
 </body>
 </html>
